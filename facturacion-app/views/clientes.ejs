@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Facturación - Clientes</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-success">
+        <div class="container">
+            <a class="navbar-brand" href="/">Sistema de Facturación</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/ventas"><i class="bi bi-cart-check"></i> Ventas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/productos"><i class="bi bi-box-seam"></i> Productos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/clientes"><i class="bi bi-people"></i> Clientes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="logout"><i class="bi bi-box-arrow-right"></i> Salir</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+                        <h4>Gestión de Clientes</h4>
+                        <button class="btn btn-light" id="btnNuevoCliente"><i class="bi bi-person-plus"></i> Nuevo Cliente</button>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="buscarCliente" placeholder="Buscar cliente...">
+                                    <button class="btn btn-outline-secondary" type="button" id="btnBuscar">
+                                        <i class="bi bi-search"></i> Buscar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="table-responsive">
+                            <table class="table table-striped" id="tablaClientes">
+                                <thead>
+                                    <tr>
+                                        <th>DNI/RUC</th>
+                                        <th>Nombres</th>
+                                        <th>Dirección</th>
+                                        <th>Celular</th>
+                                        <th>Email</th>
+                                        <th>Cumpleaños</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Aquí se cargarán los clientes dinámicamente -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Cliente -->
+    <div class="modal fade" id="modalCliente" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title" id="modalClienteTitle">Nuevo Cliente</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="clienteForm">
+                        <input type="hidden" id="cliente_id">
+                        <div class="mb-3">
+                            <label for="dni_ruc" class="form-label">DNI/RUC</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="dni_ruc" name="dni_ruc" required>
+                                <button class="btn btn-outline-secondary" type="button" id="btnConsultarDni">
+                                    <i class="bi bi-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="nombres" class="form-label">Nombres</label>
+                            <input type="text" class="form-control" id="nombres" name="nombres" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="direccion" class="form-label">Dirección</label>
+                            <input type="text" class="form-control" id="direccion" name="direccion">
+                        </div>
+                        <div class="mb-3">
+                            <label for="celular" class="form-label">Celular</label>
+                            <input type="text" class="form-control" id="celular" name="celular">
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" name="email">
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="cumple_dia" class="form-label">Día de Cumpleaños</label>
+                                <input type="number" class="form-control" id="cumple_dia" name="cumple_dia" min="0" max="31">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="cumple_mes" class="form-label">Mes de Cumpleaños</label>
+                                <input type="number" class="form-control" id="cumple_mes" name="cumple_mes" min="0" max="12">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-success" id="btnGuardarCliente">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-white text-center py-3 mt-5">
+        <div class="container">
+            <p class="mb-0">Sistema de Facturación &copy; 2025</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/clientes.js"></script>
+</body>
+</html>
